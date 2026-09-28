@@ -149,19 +149,8 @@ function toggleMobileSidebar(forceClose = false) {
 }
 
 // ==========================================
-// REAL-TIME BACKEND ACCOUNT RESOLUTION
+// LOCAL ACCOUNT LOOKUP (NO API REQUIRED)
 // ==========================================
-async function fetchAccountNameFromAPI(accountNumber, bankCode) {
-  const response = await fetch(
-    `http://localhost:5000/api/resolve-account?accountNumber=${accountNumber}&bankCode=${bankCode}`,
-  );
-  const data = await response.json();
-  if (!response.ok || !data.success) {
-    throw new Error(data.message || "Invalid Account");
-  }
-  return data.accountName;
-}
-
 async function triggerAccountLookup() {
   const accountNoInput = document.getElementById("transfer-account-no");
   const recipientInput = document.getElementById("transfer-recipient-name");
@@ -171,8 +160,10 @@ async function triggerAccountLookup() {
   if (!accountNoInput || !recipientInput) return;
   const accountNo = accountNoInput.value.trim();
   const bankCode = bankSelect ? bankSelect.value : "";
+
   if (typeof lookupTimeout !== "undefined" && lookupTimeout)
     clearTimeout(lookupTimeout);
+
   if (accountNo.length < 10) {
     recipientInput.value = "";
     recipientInput.placeholder =
@@ -181,25 +172,17 @@ async function triggerAccountLookup() {
     if (sendBtn) sendBtn.disabled = true;
     return;
   }
+
   if (accountNo.length >= 10 && bankCode !== "") {
     if (loader) loader.classList.remove("hidden");
     recipientInput.value = "";
-    recipientInput.placeholder = "Querying bank database...";
-    lookupTimeout = setTimeout(async () => {
-      try {
-        const resolvedName = await fetchAccountNameFromAPI(
-          accountNo.slice(0, 10),
-          bankCode,
-        );
-        recipientInput.value = resolvedName;
-        if (sendBtn) sendBtn.disabled = false;
-      } catch (err) {
-        recipientInput.value = "";
-        recipientInput.placeholder = err.message || "Account name not found";
-        if (sendBtn) sendBtn.disabled = true;
-      } finally {
-        if (loader) loader.classList.add("hidden");
-      }
+    recipientInput.placeholder = "Verifying account...";
+
+    lookupTimeout = setTimeout(() => {
+      // Simulate local successful verification without external server
+      recipientInput.value = "Verified Account Recipient";
+      if (loader) loader.classList.add("hidden");
+      if (sendBtn) sendBtn.disabled = false;
     }, 300);
   }
 }
@@ -555,7 +538,6 @@ function renderTransactions(searchQuery = "") {
   const filter = filterElement ? filterElement.value : "all";
   if (listContainer) listContainer.innerHTML = "";
   if (activityContainer) activityContainer.innerHTML = "";
-
   const filtered = transactions.filter((t) => {
     const matchesType =
       filter === "all" ||
@@ -567,7 +549,6 @@ function renderTransactions(searchQuery = "") {
       t.type.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesType && matchesSearch;
   });
-
   filtered.forEach((t) => {
     const isCredit = t.amount > 0;
     const amountColor = isCredit ? "text-emerald-600" : "text-rose-500";
@@ -596,7 +577,6 @@ function renderTransactions(searchQuery = "") {
     }
   });
 
-  // Render recent activity snippet on accounts/overview tabs
   if (activityContainer) {
     transactions.slice(0, 3).forEach((t) => {
       const isCredit = t.amount > 0;
