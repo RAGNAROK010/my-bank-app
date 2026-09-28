@@ -1,0 +1,1041 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reen Bank - Dashboard</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                50: "#f0fdf4",
+                100: "#dcfce7",
+                200: "#bbf7d0",
+                500: "#22c55e",
+                600: "#16a34a",
+                700: "#15803d",
+                accent: "#20c997",
+              },
+            },
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body
+    class="bg-[#f2f8f6] text-gray-800 font-sans antialiased min-h-screen flex flex-col md:flex-row relative"
+  >
+    <!-- Hidden File Input for Profile Photo Upload -->
+    <input
+      type="file"
+      id="profile-photo-input"
+      accept="image/*"
+      class="hidden"
+    />
+
+    <!-- ================= MOBILE HEADER BAR ================= -->
+    <div
+      class="md:hidden flex items-center justify-between bg-white px-6 py-4 border-b border-emerald-100 z-30"
+    >
+      <div class="flex items-center gap-3">
+        <div
+          class="w-9 h-9 rounded-xl bg-brand-500 flex items-center justify-center text-white font-bold text-lg shadow-md"
+        >
+          rb
+        </div>
+        <span class="font-bold text-xl tracking-tight text-gray-900"
+          >Reen Bank</span
+        >
+      </div>
+      <button
+        onclick="toggleMobileSidebar()"
+        class="w-10 h-10 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center text-lg focus:outline-none cursor-pointer"
+        aria-label="Toggle Menu"
+      >
+        <i id="mobile-menu-icon" class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+
+    <!-- ================= SIDEBAR ================= -->
+    <aside
+      id="sidebar"
+      class="fixed inset-y-0 left-0 z-40 w-64 bg-white border-r border-emerald-100 flex flex-col justify-between p-6 shrink-0 transform -translate-x-full md:translate-x-0 md:static transition-transform duration-300 ease-in-out shadow-xl md:shadow-none"
+    >
+      <div>
+        <!-- Brand Logo -->
+        <div class="flex items-center justify-between mb-10">
+          <div class="flex items-center gap-3">
+            <div
+              class="w-10 h-10 rounded-xl bg-brand-500 flex items-center justify-center text-white font-bold text-xl shadow-md shadow-brand-500/20"
+            >
+              rb
+            </div>
+            <span class="font-bold text-2xl tracking-tight text-gray-900"
+              >Reen Bank</span
+            >
+          </div>
+          <button
+            onclick="toggleMobileSidebar()"
+            class="md:hidden text-gray-400 hover:text-gray-600"
+          >
+            <i class="fa-solid fa-xmark text-lg"></i>
+          </button>
+        </div>
+        <!-- Navigation Links -->
+        <nav class="space-y-2">
+          <button
+            onclick="
+              switchTab('overview');
+              toggleMobileSidebar(true);
+            "
+            id="nav-overview"
+            class="nav-btn active w-full flex items-center gap-4 px-4 py-3 rounded-xl font-medium text-sm transition-all duration-200 bg-brand-500 text-white shadow-md cursor-pointer"
+          >
+            <i class="fa-solid fa-border-all text-lg"></i> Overview
+          </button>
+          <button
+            onclick="
+              switchTab('accounts');
+              toggleMobileSidebar(true);
+            "
+            id="nav-accounts"
+            class="nav-btn w-full flex items-center gap-4 px-4 py-3 rounded-xl font-medium text-sm transition-all duration-200 text-gray-500 hover:bg-emerald-50 hover:text-brand-600 cursor-pointer"
+          >
+            <i class="fa-solid fa-wallet text-lg"></i> Accounts
+          </button>
+          <button
+            onclick="
+              switchTab('transactions');
+              toggleMobileSidebar(true);
+            "
+            id="nav-transactions"
+            class="nav-btn w-full flex items-center gap-4 px-4 py-3 rounded-xl font-medium text-sm transition-all duration-200 text-gray-500 hover:bg-emerald-50 hover:text-brand-600 cursor-pointer"
+          >
+            <i class="fa-solid fa-right-left text-lg"></i> Transactions
+          </button>
+          <button
+            onclick="
+              switchTab('profile');
+              toggleMobileSidebar(true);
+            "
+            id="nav-profile"
+            class="nav-btn w-full flex items-center gap-4 px-4 py-3 rounded-xl font-medium text-sm transition-all duration-200 text-gray-500 hover:bg-emerald-50 hover:text-brand-600 cursor-pointer"
+          >
+            <i class="fa-regular fa-user text-lg"></i> Profile
+          </button>
+        </nav>
+      </div>
+      <!-- Bottom Actions -->
+      <div class="pt-6 border-t border-gray-100 space-y-2">
+        <button
+          onclick="openModal('modal-reset')"
+          class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl font-medium text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-800 transition cursor-pointer"
+        >
+          <i class="fa-solid fa-key text-gray-400"></i> Reset Password
+        </button>
+        <button
+          onclick="handleLogout()"
+          class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl font-medium text-sm text-red-500 hover:bg-red-50 transition cursor-pointer"
+        >
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+        </button>
+      </div>
+    </aside>
+
+    <!-- Sidebar backdrop for mobile -->
+    <div
+      id="sidebar-backdrop"
+      onclick="toggleMobileSidebar(true)"
+      class="fixed inset-0 bg-black/40 z-30 hidden md:hidden"
+    ></div>
+
+    <!-- ================= MAIN CONTENT ================= -->
+    <main class="flex-1 p-4 md:p-8 overflow-y-auto max-w-7xl mx-auto w-full">
+      <!-- Top Header Bar -->
+      <header
+        class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8"
+      >
+        <div>
+          <h1
+            id="page-title"
+            class="text-2xl md:text-3xl font-bold text-gray-900"
+          >
+            Overview
+          </h1>
+          <p
+            class="text-xs text-brand-600 font-semibold tracking-wide uppercase mt-1 flex items-center gap-1.5 flex-wrap"
+          >
+            <span id="user-header-name">Mubarak</span> &bull;
+            <span id="user-header-account-no" class="font-mono text-gray-700"
+              >1234567890</span
+            >
+          </p>
+        </div>
+        <div class="flex items-center gap-3 flex-wrap sm:flex-nowrap">
+          <!-- Quick Transfer Button -->
+          <button
+            onclick="openTransferModal()"
+            class="px-4 py-2 bg-brand-500 hover:bg-brand-600 text-white rounded-full text-xs font-bold shadow-sm transition flex items-center gap-2 cursor-pointer"
+          >
+            <i class="fa-solid fa-paper-plane text-xs"></i> Transfer Money
+          </button>
+          <!-- Search Input -->
+          <div class="relative">
+            <i
+              class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-xs"
+            ></i>
+            <input
+              id="global-search"
+              type="text"
+              oninput="handleGlobalSearch(this.value)"
+              placeholder="Search..."
+              class="pl-9 pr-4 py-2 bg-white text-sm rounded-full border border-gray-200 focus:outline-none focus:border-brand-500 w-36 sm:w-52 shadow-sm transition"
+            />
+          </div>
+          <!-- Notifications -->
+          <button
+            onclick="showNotifications()"
+            class="relative w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-gray-50 shadow-sm transition cursor-pointer"
+          >
+            <i class="fa-regular fa-bell"></i>
+            <span
+              class="absolute top-2 right-2 w-2 h-2 rounded-full bg-red-500"
+            ></span>
+          </button>
+          <!-- User Profile Avatar Icon -->
+          <div
+            onclick="switchTab('profile')"
+            id="user-avatar-small-container"
+            class="w-10 h-10 rounded-full bg-brand-100 border-2 border-brand-500 flex items-center justify-center text-brand-700 font-bold cursor-pointer shadow-sm overflow-hidden shrink-0"
+          >
+            <i
+              id="user-avatar-small-icon"
+              class="fa-solid fa-user-check text-sm"
+            ></i>
+            <img
+              id="user-avatar-small-img"
+              src=""
+              alt="Profile"
+              class="w-full h-full object-cover hidden"
+            />
+          </div>
+        </div>
+      </header>
+
+      <!-- SECTION 1: OVERVIEW TAB -->
+      <section id="tab-overview" class="tab-content space-y-8">
+        <!-- Balance Card -->
+        <div
+          class="bg-gradient-to-r from-emerald-100/80 via-emerald-50 to-teal-100/60 p-6 rounded-3xl border border-emerald-200/60 shadow-sm relative overflow-hidden"
+        >
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-sm font-semibold text-gray-600"
+              >Current Account Balance</span
+            >
+            <div class="flex items-center gap-3">
+              <button
+                onclick="toggleVisibility()"
+                class="p-2 text-gray-500 hover:text-gray-800 transition cursor-pointer"
+              >
+                <i id="eye-icon" class="fa-regular fa-eye-slash"></i>
+              </button>
+              <span
+                class="text-xs bg-white/80 px-3 py-1 rounded-full text-gray-500 border border-emerald-200/50 hidden sm:inline-block"
+              >
+                <i class="fa-regular fa-calendar mr-1"></i> Active Session
+              </span>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+            <div class="flex items-center gap-4">
+              <div
+                class="w-14 h-14 rounded-2xl bg-white/90 border border-brand-200 flex items-center justify-center text-brand-600 font-bold text-2xl shadow-sm shrink-0"
+              >
+                rb
+              </div>
+              <div>
+                <p class="text-xs text-gray-500 font-medium">Current Balance</p>
+                <h2
+                  id="main-balance-text"
+                  class="text-2xl md:text-3xl font-extrabold text-gray-900 tracking-tight"
+                >
+                  ₦ 0.00
+                </h2>
+              </div>
+            </div>
+            <div>
+              <p class="text-xs text-gray-500 font-medium">Income</p>
+              <p id="income-text" class="text-xl font-bold text-emerald-700">
+                ₦ 0.00
+              </p>
+            </div>
+            <div>
+              <p class="text-xs text-gray-500 font-medium">Expense</p>
+              <p id="expense-text" class="text-xl font-bold text-rose-600">
+                ₦ 0.00
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Accounts Preview -->
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="font-bold text-gray-800 text-lg">Accounts</h3>
+            <button
+              onclick="openModal('modal-add-account')"
+              class="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-brand-500 hover:text-white transition shadow-sm cursor-pointer"
+            >
+              <i class="fa-solid fa-plus text-xs"></i>
+            </button>
+          </div>
+          <div
+            id="accounts-grid-preview"
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+          >
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+
+        <!-- Statistics & Promo Banner -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <!-- Progress Bars -->
+          <div
+            class="lg:col-span-2 bg-white p-6 rounded-3xl border border-gray-100 shadow-sm space-y-6"
+          >
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-gray-800">Statistics</h3>
+              <span
+                class="text-xs bg-gray-50 border border-gray-200 px-3 py-1 rounded-full text-gray-500"
+                >Lifetime Summary</span
+              >
+            </div>
+            <div class="space-y-4">
+              <div class="flex items-center gap-3 sm:gap-4">
+                <div
+                  class="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-center text-brand-600 font-bold text-sm shrink-0"
+                >
+                  rb
+                </div>
+                <span class="w-14 sm:w-16 text-sm font-medium text-gray-600"
+                  >Income</span
+                >
+                <div
+                  class="flex-1 bg-gray-100 h-3 rounded-full overflow-hidden"
+                >
+                  <div
+                    id="income-bar"
+                    class="bg-brand-500 h-full rounded-full transition-all duration-300"
+                    style="width: 0%"
+                  ></div>
+                </div>
+                <span
+                  id="income-bar-val"
+                  class="font-bold text-gray-800 text-xs sm:text-sm w-20 sm:w-28 text-right"
+                  >₦ 0.00</span
+                >
+              </div>
+              <div class="flex items-center gap-3 sm:gap-4">
+                <div
+                  class="w-10 h-10 rounded-xl bg-rose-50 border border-rose-200 flex items-center justify-center text-rose-500 font-bold text-sm shrink-0"
+                >
+                  rb
+                </div>
+                <span class="w-14 sm:w-16 text-sm font-medium text-gray-600"
+                  >Expense</span
+                >
+                <div
+                  class="flex-1 bg-gray-100 h-3 rounded-full overflow-hidden"
+                >
+                  <div
+                    id="expense-bar"
+                    class="bg-rose-500 h-full rounded-full transition-all duration-300"
+                    style="width: 0%"
+                  ></div>
+                </div>
+                <span
+                  id="expense-bar-val"
+                  class="font-bold text-gray-800 text-xs sm:text-sm w-20 sm:w-28 text-right"
+                  >₦ 0.00</span
+                >
+              </div>
+            </div>
+          </div>
+          <!-- Upgrade Promo Card -->
+          <div
+            class="bg-gradient-to-br from-brand-500 to-teal-600 p-6 rounded-3xl text-white flex flex-col justify-between shadow-lg shadow-brand-500/10 relative overflow-hidden"
+          >
+            <div
+              class="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white mb-8"
+            >
+              <i class="fa-solid fa-arrow-up-right-from-square text-sm"></i>
+            </div>
+            <div>
+              <h4 class="text-xl font-bold mb-1">Upgrade to PRO</h4>
+              <p class="text-xs text-emerald-100">
+                Sign in on more than one device & unlock advanced insights
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 2: ACCOUNTS TAB -->
+      <section id="tab-accounts" class="tab-content hidden space-y-8">
+        <div
+          class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
+        >
+          <h3 class="font-bold text-gray-800 text-xl">All Managed Accounts</h3>
+          <div class="flex gap-2 flex-wrap">
+            <button
+              onclick="openTransferModal()"
+              class="px-4 py-2.5 bg-emerald-600 text-white rounded-xl font-medium text-sm hover:bg-emerald-700 shadow-md transition flex items-center gap-2 cursor-pointer"
+            >
+              <i class="fa-solid fa-paper-plane text-xs"></i> Transfer
+            </button>
+            <button
+              onclick="openModal('modal-add-account')"
+              class="px-4 py-2.5 bg-brand-500 text-white rounded-xl font-medium text-sm hover:bg-brand-600 shadow-md transition flex items-center gap-2 cursor-pointer"
+            >
+              <i class="fa-solid fa-plus text-xs"></i> Add Account
+            </button>
+          </div>
+        </div>
+        <div
+          id="accounts-grid-full"
+          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
+          <!-- Rendered dynamically -->
+        </div>
+        <!-- Recent Transactions Sub-table -->
+        <div class="bg-white rounded-3xl p-6 border border-gray-100 shadow-sm">
+          <div class="flex items-center justify-between mb-4">
+            <h4 class="font-bold text-gray-800">Account Activity</h4>
+            <button
+              onclick="switchTab('transactions')"
+              class="text-xs font-semibold text-brand-600 hover:underline cursor-pointer"
+            >
+              View All &rarr;
+            </button>
+          </div>
+          <div id="accounts-activity-list" class="divide-y divide-gray-100">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 3: TRANSACTIONS TAB -->
+      <section id="tab-transactions" class="tab-content hidden space-y-6">
+        <div
+          class="bg-white rounded-3xl p-6 border border-gray-100 shadow-sm space-y-4"
+        >
+          <div
+            class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-gray-100"
+          >
+            <h3 class="font-bold text-gray-800 text-lg">Transaction History</h3>
+            <div class="flex gap-2 w-full sm:w-auto">
+              <select
+                id="tx-filter"
+                onchange="renderTransactions()"
+                class="px-3 py-2 bg-gray-50 text-xs rounded-xl border border-gray-200 focus:outline-none w-full sm:w-auto"
+              >
+                <option value="all">All Types</option>
+                <option value="credit">Credits (+)</option>
+                <option value="debit">Debits (-)</option>
+              </select>
+            </div>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse min-w-[650px]">
+              <thead>
+                <tr
+                  class="text-xs text-gray-400 uppercase border-b border-gray-100"
+                >
+                  <th class="py-3 px-4">Type</th>
+                  <th class="py-3 px-4">Name / Counterparty</th>
+                  <th class="py-3 px-4">Category</th>
+                  <th class="py-3 px-4">Date & Time</th>
+                  <th class="py-3 px-4">Amount</th>
+                  <th class="py-3 px-4">Status</th>
+                </tr>
+              </thead>
+              <tbody
+                id="full-transactions-list"
+                class="divide-y divide-gray-50 text-sm"
+              >
+                <!-- Rendered dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 4: PROFILE TAB -->
+      <section id="tab-profile" class="tab-content hidden space-y-8">
+        <div
+          class="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm max-w-2xl mx-auto text-center space-y-6 relative"
+        >
+          <div class="relative w-24 h-24 mx-auto">
+            <!-- Avatar Display Container -->
+            <div
+              id="user-avatar-large-container"
+              class="w-24 h-24 rounded-full bg-brand-100 border-4 border-brand-500 flex items-center justify-center text-brand-700 text-4xl shadow-inner overflow-hidden"
+            >
+              <i id="user-avatar-large-icon" class="fa-solid fa-user-large"></i>
+              <img
+                id="user-avatar-large-img"
+                src=""
+                alt="Profile"
+                class="w-full h-full object-cover hidden"
+              />
+            </div>
+            <!-- Upload Trigger Button -->
+            <button
+              onclick="triggerPhotoUpload()"
+              title="Change Profile Photo"
+              class="absolute bottom-0 right-0 w-8 h-8 bg-brand-500 text-white rounded-full flex items-center justify-center border-2 border-white shadow hover:bg-brand-600 transition cursor-pointer"
+            >
+              <i class="fa-solid fa-camera text-xs"></i>
+            </button>
+          </div>
+          <div>
+            <h2 id="profile-name" class="text-2xl font-bold text-gray-900">
+              Mubarak
+            </h2>
+            <span
+              class="inline-block mt-1 px-3 py-1 bg-brand-50 text-brand-700 font-semibold rounded-full text-xs"
+              >Verified Account</span
+            >
+          </div>
+          <!-- Edit Profile Action Button -->
+          <div class="flex justify-center">
+            <button
+              onclick="openEditProfileModal()"
+              class="px-5 py-2.5 bg-brand-500 hover:bg-brand-600 text-white font-semibold rounded-xl text-xs shadow-sm transition flex items-center gap-2 cursor-pointer"
+            >
+              <i class="fa-solid fa-pen-to-square"></i> Edit Profile
+            </button>
+          </div>
+          <div
+            class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left pt-4 border-t border-gray-100"
+          >
+            <div class="p-4 bg-gray-50 rounded-2xl">
+              <p class="text-xs text-gray-400">Email Address</p>
+              <p
+                id="profile-email"
+                class="font-medium text-gray-800 text-sm mt-0.5 break-all"
+              >
+                mubarakismaheel67@gmail.com
+              </p>
+            </div>
+            <div class="p-4 bg-gray-50 rounded-2xl">
+              <p class="text-xs text-gray-400">Phone Number</p>
+              <p
+                id="profile-phone"
+                class="font-medium text-gray-800 text-sm mt-0.5"
+              >
+                +234 812 345 6789
+              </p>
+            </div>
+            <div class="p-4 bg-gray-50 rounded-2xl">
+              <p class="text-xs text-gray-400">Account Number</p>
+              <p
+                id="profile-account-no"
+                class="font-mono font-medium text-gray-800 text-sm mt-0.5"
+              >
+                1234567890
+              </p>
+            </div>
+            <div class="p-4 bg-gray-50 rounded-2xl">
+              <p class="text-xs text-gray-400">Tier Status</p>
+              <p class="font-medium text-emerald-600 text-sm mt-0.5">
+                Tier 3 (Unlimited)
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ================= MODALS & OVERLAYS ================= -->
+    <!-- BANK TRANSFER MODAL WITH LIVE ACCOUNT RESOLUTION -->
+    <div
+      id="modal-transfer"
+      class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto"
+    >
+      <div
+        class="bg-white rounded-3xl p-6 w-full max-w-md shadow-2xl space-y-5 my-auto"
+      >
+        <div class="flex items-center justify-between">
+          <h3 class="text-xl font-bold text-brand-600">Transfer Money</h3>
+          <button
+            onclick="closeModal('modal-transfer')"
+            class="text-gray-400 hover:text-gray-600 text-lg cursor-pointer"
+          >
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <div class="space-y-3.5">
+          <div>
+            <label class="block text-xs font-semibold text-gray-500 mb-1"
+              >From Account</label
+            >
+            <select
+              id="transfer-source-account"
+              class="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-brand-500"
+            >
+              <!-- Dynamically populated -->
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-gray-500 mb-1"
+              >Select Bank</label
+            >
+            <select
+              id="transfer-bank-select"
+              onchange="triggerAccountLookup()"
+              class="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-brand-500"
+            >
+              <option value="058">Guaranty Trust Bank (GTBank)</option>
+              <option value="044">Access Bank</option>
+              <option value="057">Zenith Bank</option>
+              <option value="011">First Bank of Nigeria</option>
+              <option value="033">United Bank for Africa (UBA)</option>
+              <option value="50211">Kuda Bank</option>
+              <option value="999992">OPay</option>
+              <option value="999991">Palmpay</option>
+              <option value="50515">Moniepoint</option>
+              <option value="070">Fidelity Bank</option>
+              <option value="035">Wema Bank (ALAT)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-gray-500 mb-1"
+              >Account Number</label
+            >
+            <input
+              id="transfer-account-no"
+              type="text"
+              maxlength="10"
+              placeholder="Enter 10-digit account number"
+              oninput="triggerAccountLookup()"
+              class="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-brand-500 font-mono"
+            />
+          </div>
+          <div>
+            <div class="flex items-center justify-between mb-1">
+              <label class="block text-xs font-semibold text-gray-500"
+                >Verified Recipient Name</label
+              >
+              <span
+                id="lookup-loader"
+                class="text-[10px] text-brand-600 font-semibold hidden items-center gap-1"
+              >
+                <i class="fa-solid fa-spinner fa-spin"></i> Verifying with
+                Bank...
+              </span>
+            </div>
+            <input
+              id="transfer-recipient-name"
+              type="text"
+              placeholder="Enters automatically when 10 digits are typed"
+              readonly
+              class="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm bg-gray-50 font-semibold text-gray-800 focus:outline-none cursor-not-allowed"
+            />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-gray-500 mb-1"
+              >Amount (₦)</label
+            >
+            <input
+              id="transfer-amount"
+              type="number"
+              placeholder="5,000"
+              class="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-brand-500"
+            />
+          </div>
+        </div>
+        <div class="flex justify-end gap-3 pt-2">
+          <button
+            onclick="closeModal('modal-transfer')"
+            class="px-5 py-2.5 rounded-xl bg-gray-100 text-gray-600 font-medium text-sm hover:bg-gray-200 transition cursor-pointer"
+          >
+            Cancel
+          </button>
+          <button
+            id="btn-send-money"
+            onclick="handleBankTransfer()"
+            disabled
+            class="px-5 py-2.5 rounded-xl bg-brand-500 text-white font-medium text-sm hover:bg-brand-600 transition shadow-md cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Send Money
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- EDIT PROFILE MODAL -->
+    <div
+      id="modal-edit-profile"
+      class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto"
+    >
+      <div
+        class="bg-white rounded-3xl p-6 w-full max-w-md shadow-2xl space-y-6 my-auto"
+      >
+        <h3 class="text-xl font-bold text-brand-600">Edit Profile</h3>
+        <div class="space-y-4">
+          <div>
+            <label class="block text-xs font-semibold text-gray-500 mb-1"
+              >Full Name</label
+            >
+            <input
+              id="edit-profile-name"
+              type="text"
+              placeholder="Enter your full name"
+              class="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-brand-500"
+            />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-gray-500 mb-1"
+              >Email Address</label
+            >
+            <input
+              id="edit-profile-email"
+              type="email"
+              placeholder="Enter your email"
+              class="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-brand-500"
+            />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-gray-500 mb-1"
+              >Phone Number</label
+            >
+            <input
+              id="edit-profile-phone"
+              type="text"
+              placeholder="+234 812 345 6789"
+              class="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-brand-500"
+            />
+          </div>
+        </div>
+        <div class="flex justify-end gap-3">
+          <button
+            onclick="closeModal('modal-edit-profile')"
+            class="px-5 py-2.5 rounded-xl bg-gray-100 text-gray-600 font-medium text-sm hover:bg-gray-200 transition cursor-pointer"
+          >
+            Cancel
+          </button>
+          <button
+            onclick="handleSaveProfile()"
+            class="px-5 py-2.5 rounded-xl bg-brand-500 text-white font-medium text-sm hover:bg-brand-600 transition shadow-md cursor-pointer"
+          >
+            Save Changes
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1. ADD ACCOUNT MODAL -->
+    <div
+      id="modal-add-account"
+      class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto"
+    >
+      <div
+        class="bg-white rounded-3xl p-6 w-full max-w-md shadow-2xl space-y-6 my-auto"
+      >
+        <h3 class="text-xl font-bold text-brand-600">Add Account</h3>
+        <div class="space-y-4">
+          <div>
+            <label class="block text-xs font-semibold text-gray-500 mb-1"
+              >Account Name</label
+            >
+            <input
+              id="input-acc-name"
+              type="text"
+              placeholder="e.g. Vacation Savings"
+              class="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-brand-500"
+            />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-gray-500 mb-1"
+              >Initial Deposit (₦)</label
+            >
+            <input
+              id="input-acc-deposit"
+              type="number"
+              placeholder="0.00"
+              class="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-brand-500"
+            />
+          </div>
+        </div>
+        <div class="flex justify-end gap-3">
+          <button
+            onclick="closeModal('modal-add-account')"
+            class="px-5 py-2.5 rounded-xl bg-gray-100 text-gray-600 font-medium text-sm hover:bg-gray-200 transition cursor-pointer"
+          >
+            Cancel
+          </button>
+          <button
+            onclick="handleAddAccount()"
+            class="px-5 py-2.5 rounded-xl bg-brand-500 text-white font-medium text-sm hover:bg-brand-600 transition shadow-md cursor-pointer"
+          >
+            Add
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. FUND WALLET MODAL -->
+    <div
+      id="modal-fund"
+      class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto"
+    >
+      <div
+        class="bg-white rounded-3xl p-6 w-full max-w-md shadow-2xl space-y-6 my-auto"
+      >
+        <h3 class="text-xl font-bold text-brand-600">Fund Account</h3>
+        <div class="space-y-4">
+          <div>
+            <label class="block text-xs font-semibold text-gray-500 mb-1"
+              >Target Account</label
+            >
+            <select
+              id="fund-target-account"
+              class="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-brand-500"
+            >
+              <!-- Dynamically filled -->
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-gray-500 mb-1"
+              >Amount (₦)</label
+            >
+            <input
+              id="fund-amount"
+              type="number"
+              placeholder="10,000"
+              class="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-brand-500"
+            />
+          </div>
+        </div>
+        <div class="flex justify-end gap-3">
+          <button
+            onclick="closeModal('modal-fund')"
+            class="px-5 py-2.5 rounded-xl bg-gray-100 text-gray-600 font-medium text-sm hover:bg-gray-200 transition cursor-pointer"
+          >
+            Cancel
+          </button>
+          <button
+            onclick="handleFund()"
+            class="px-5 py-2.5 rounded-xl bg-brand-500 text-white font-medium text-sm hover:bg-brand-600 transition shadow-md cursor-pointer"
+          >
+            Fund
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. WITHDRAW MODAL -->
+    <div
+      id="modal-withdraw"
+      class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto"
+    >
+      <div
+        class="bg-white rounded-3xl p-6 w-full max-w-md shadow-2xl space-y-6 my-auto"
+      >
+        <h3 class="text-xl font-bold text-brand-600">Withdraw Funds</h3>
+        <div class="space-y-4">
+          <div>
+            <label class="block text-xs font-semibold text-gray-500 mb-1"
+              >Source Account</label
+            >
+            <select
+              id="withdraw-source-account"
+              class="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-brand-500"
+            >
+              <!-- Dynamically filled -->
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-gray-500 mb-1"
+              >Amount (₦)</label
+            >
+            <input
+              id="withdraw-amount"
+              type="number"
+              placeholder="5,000"
+              class="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-brand-500"
+            />
+          </div>
+        </div>
+        <div class="flex justify-end gap-3">
+          <button
+            onclick="closeModal('modal-withdraw')"
+            class="px-5 py-2.5 rounded-xl bg-gray-100 text-gray-600 font-medium text-sm hover:bg-gray-200 transition cursor-pointer"
+          >
+            Cancel
+          </button>
+          <button
+            onclick="handleWithdraw()"
+            class="px-5 py-2.5 rounded-xl bg-brand-500 text-white font-medium text-sm hover:bg-brand-600 transition shadow-md cursor-pointer"
+          >
+            Withdraw
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. RESET PASSWORD MODAL WIZARD -->
+    <div
+      id="modal-reset"
+      class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto"
+    >
+      <div
+        class="bg-white rounded-3xl p-6 w-full max-w-md shadow-2xl space-y-6 my-auto"
+      >
+        <!-- Step 1 -->
+        <div id="reset-step-1" class="space-y-4">
+          <h3 class="text-xl font-bold text-brand-600">Reset Password</h3>
+          <p class="text-xs text-gray-500">
+            Enter your email address to receive a security OTP.
+          </p>
+          <input
+            id="reset-email"
+            type="email"
+            value="mubarakismaheel67@gmail.com"
+            class="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-brand-500"
+          />
+          <div class="flex justify-end gap-2">
+            <button
+              onclick="closeModal('modal-reset')"
+              class="px-4 py-2 text-xs rounded-xl bg-gray-100 cursor-pointer"
+            >
+              Cancel
+            </button>
+            <button
+              onclick="goToResetStep(2)"
+              class="px-4 py-2 text-xs rounded-xl bg-brand-500 text-white cursor-pointer"
+            >
+              Send Code
+            </button>
+          </div>
+        </div>
+        <!-- Step 2 -->
+        <div id="reset-step-2" class="space-y-4 hidden">
+          <h3 class="text-xl font-bold text-brand-600">Enter OTP</h3>
+          <p class="text-xs text-gray-500">
+            Enter the 6-digit code sent to your email.
+          </p>
+          <div class="flex justify-between gap-2">
+            <input
+              type="text"
+              maxlength="1"
+              class="w-10 h-12 text-center rounded-xl border border-gray-200 text-lg font-bold focus:border-brand-500"
+              value="4"
+            />
+            <input
+              type="text"
+              maxlength="1"
+              class="w-10 h-12 text-center rounded-xl border border-gray-200 text-lg font-bold focus:border-brand-500"
+              value="8"
+            />
+            <input
+              type="text"
+              maxlength="1"
+              class="w-10 h-12 text-center rounded-xl border border-gray-200 text-lg font-bold focus:border-brand-500"
+              value="2"
+            />
+            <input
+              type="text"
+              maxlength="1"
+              class="w-10 h-12 text-center rounded-xl border border-gray-200 text-lg font-bold focus:border-brand-500"
+              value="9"
+            />
+            <input
+              type="text"
+              maxlength="1"
+              class="w-10 h-12 text-center rounded-xl border border-gray-200 text-lg font-bold focus:border-brand-500"
+              value="0"
+            />
+            <input
+              type="text"
+              maxlength="1"
+              class="w-10 h-12 text-center rounded-xl border border-gray-200 text-lg font-bold focus:border-brand-500"
+              value="1"
+            />
+          </div>
+          <div class="flex justify-end gap-2">
+            <button
+              onclick="goToResetStep(3)"
+              class="w-full py-2.5 text-xs rounded-xl bg-brand-500 text-white font-medium cursor-pointer"
+            >
+              Verify OTP
+            </button>
+          </div>
+        </div>
+        <!-- Step 3 -->
+        <div id="reset-step-3" class="space-y-4 hidden">
+          <h3 class="text-xl font-bold text-brand-600">Enter New Password</h3>
+          <input
+            id="new-pass-1"
+            type="password"
+            placeholder="New Password"
+            class="w-full px-4 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-brand-500"
+          />
+          <input
+            id="new-pass-2"
+            type="password"
+            placeholder="Confirm Password"
+            class="w-full px-4 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-brand-500"
+          />
+          <button
+            onclick="goToResetStep(4)"
+            class="w-full py-2.5 text-xs rounded-xl bg-brand-500 text-white font-medium cursor-pointer"
+          >
+            Reset Password
+          </button>
+        </div>
+        <!-- Step 4 -->
+        <div id="reset-step-4" class="space-y-4 hidden text-center">
+          <div
+            class="w-12 h-12 bg-emerald-100 text-brand-600 rounded-full flex items-center justify-center mx-auto text-xl"
+          >
+            <i class="fa-solid fa-check"></i>
+          </div>
+          <h3 class="text-lg font-bold text-gray-800">
+            Password Reset Successful!
+          </h3>
+          <button
+            onclick="
+              closeModal('modal-reset');
+              goToResetStep(1);
+            "
+            class="w-full py-2.5 text-xs rounded-xl bg-brand-500 text-white font-medium cursor-pointer"
+          >
+            Done
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- External Script Linking -->
+    <script src="dashboard.js"></script>
+  </body>
+</html>

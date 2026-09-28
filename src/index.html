@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reen Bank — Experience Hassle-Free Banking</title>
+    <link href="./output.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=menu,close,expand_more,arrow_forward,mail,chevron_right"
+    />
+  </head>
+  <body
+    class="min-h-screen bg-[#D8F2E7] text-black font-sans antialiased overflow-x-hidden"
+  >
+    <!-- NAVIGATION HEADER -->
+    <header class="w-full bg-[#D8F2E7]">
+      <div
+        class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 h-[70px] sm:h-[80px] flex items-center justify-between gap-4"
+      >
+        <!-- Logo -->
+        <a href="./index.html" class="flex items-center gap-2">
+          <img
+            src="./assets/images/logo.png"
+            alt="Reen Bank Logo"
+            class="h-7 sm:h-9 object-contain"
+          />
+        </a>
+        <!-- Desktop Navigation -->
+        <nav
+          class="hidden md:flex items-center gap-8 text-xs sm:text-sm font-semibold text-gray-700"
+        >
+          <a href="#services" class="hover:text-black transition-colors"
+            >Services</a
+          >
+          <a href="#faqs" class="hover:text-black transition-colors">FAQs</a>
+          <a href="#about" class="hover:text-black transition-colors">About</a>
+          <a href="#contact" class="hover:text-black transition-colors"
+            >Contact Us</a
+          >
+        </nav>
+        <!-- Right CTA / Mobile Menu Button -->
+        <div class="flex items-center gap-3">
+          <button
+            onclick="openLoginModal()"
+            class="hidden sm:inline-block border border-[#00B074] text-[#00B074] bg-white/40 hover:bg-[#00B074] hover:text-white px-6 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-colors cursor-pointer"
+          >
+            Login
+          </button>
+          <button
+            id="menuBtn"
+            onclick="toggleMobileMenu()"
+            class="md:hidden text-black flex items-center justify-center p-1 focus:outline-none cursor-pointer"
+            aria-label="Open menu"
+          >
+            <span class="material-symbols-outlined !text-2xl sm:!text-3xl"
+              >menu</span
+            >
+          </button>
+        </div>
+      </div>
+    </header>
+    <!-- MOBILE DRAWER MENU OVERLAY -->
+    <div
+      id="mobileMenu"
+      class="fixed inset-0 bg-black/50 z-50 hidden md:hidden transition-opacity"
+    >
+      <div
+        class="w-64 bg-[#D8F2E7] h-full p-6 flex flex-col justify-between shadow-xl"
+      >
+        <div>
+          <div class="flex items-center justify-between mb-8">
+            <img src="./assets/images/logo.png" alt="Reen Bank" class="h-7" />
+            <button
+              onclick="toggleMobileMenu()"
+              class="text-black p-1 cursor-pointer"
+              aria-label="Close menu"
+            >
+              <span class="material-symbols-outlined !text-2xl">close</span>
+            </button>
+          </div>
+          <nav class="flex flex-col gap-5 text-base font-medium text-gray-800">
+            <a
+              href="#services"
+              onclick="toggleMobileMenu()"
+              class="hover:text-black"
+              >Services</a
+            >
+            <a
+              href="#faqs"
+              onclick="toggleMobileMenu()"
+              class="hover:text-black"
+              >FAQs</a
+            >
+            <a
+              href="#about"
+              onclick="toggleMobileMenu()"
+              class="hover:text-black"
+              >About</a
+            >
+            <a
+              href="#contact"
+              onclick="toggleMobileMenu()"
+              class="hover:text-black"
+              >Contact Us</a
+            >
+          </nav>
+        </div>
+        <button
+          onclick="
+            toggleMobileMenu();
+            openLoginModal();
+          "
+          class="w-full border border-[#00B074] text-[#00B074] bg-white py-2.5 rounded-lg text-sm font-semibold hover:bg-[#00B074] hover:text-white transition-colors cursor-pointer"
+        >
+          Login
+        </button>
+      </div>
+    </div>
+    <!-- HERO SECTION -->
+    <section class="w-full bg-[#D8F2E7] pt-4 pb-12 sm:pb-16 lg:pb-24">
+      <div
+        class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12"
+      >
+        <!-- Left Text Content -->
+        <div class="max-w-[560px] text-left">
+          <p class="text-[#00B074] text-xs sm:text-sm font-bold mb-2">
+            Reen Bank
+          </p>
+          <h1
+            class="text-3xl sm:text-5xl lg:text-6xl font-black leading-tight tracking-tight text-gray-900 mb-4"
+          >
+            Experience <br />hassle-free banking
+          </h1>
+          <p
+            class="text-gray-600 text-xs sm:text-sm leading-relaxed mb-6 sm:mb-8 max-w-[480px]"
+          >
+            Experience simple, secure, and stress-free banking. Say goodbye to
+            complex procedures and hello to seamless digital banking with Reen
+            Bank.
+          </p>
+          <div class="flex items-center gap-3 sm:gap-4 flex-wrap">
+            <a
+              href="./register.html"
+              class="inline-block bg-[#00B074] text-white py-3 px-6 sm:px-8 rounded-lg font-semibold text-xs sm:text-sm hover:bg-[#009160] transition-colors text-center cursor-pointer"
+            >
+              Get Started
+            </a>
+            <a
+              href="#services"
+              class="inline-flex items-center justify-center gap-1.5 border border-[#00B074] text-[#00B074] bg-white/30 py-3 px-6 sm:px-8 rounded-lg font-semibold text-xs sm:text-sm hover:bg-[#00B074] hover:text-white transition-colors text-center cursor-pointer"
+            >
+              Learn More
+              <span class="material-symbols-outlined !text-base"
+                >arrow_forward</span
+              >
+            </a>
+          </div>
+        </div>
+        <!-- Right Mockup Cards Graphic -->
+        <div class="shrink-0 w-full lg:max-w-[580px] flex justify-center">
+          <img
+            src="./assets/images/Reen_Bank_Credit_Card_Mockup_v01 1.png"
+            alt="Reen Bank Digital Cards"
+            class="w-full max-w-[520px] h-auto object-contain drop-shadow-xl"
+          />
+        </div>
+      </div>
+    </section>
+    <!-- SERVICES SECTION -->
+    <section id="services" class="w-full bg-white py-12 sm:py-20">
+      <div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
+        <h2
+          class="text-2xl sm:text-4xl font-extrabold text-gray-900 mb-8 sm:mb-12 tracking-tight"
+        >
+          Services
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12">
+          <!-- Service Item 1 -->
+          <div class="flex items-start gap-4">
+            <div
+              class="w-12 h-12 rounded-xl bg-[#FFF0F0] flex items-center justify-center shrink-0"
+            >
+              <img
+                src="./assets/images/savings 1.png"
+                alt="Savings accounts"
+                class="w-6 h-6 object-contain"
+              />
+            </div>
+            <div>
+              <h3 class="font-bold text-base sm:text-lg text-[#00B074] mb-1.5">
+                Savings accounts
+              </h3>
+              <p class="text-gray-500 text-xs sm:text-sm leading-relaxed">
+                Reen Bank could offer a variety of savings accounts with
+                different interest rates and terms, allowing customers to save
+                money and earn interest over time. These accounts could include
+                features like automatic transfers, overdraft protection, and
+                mobile banking access.
+              </p>
+            </div>
+          </div>
+          <!-- Service Item 2 -->
+          <div class="flex items-start gap-4">
+            <div
+              class="w-12 h-12 rounded-xl bg-[#FFF0F0] flex items-center justify-center shrink-0"
+            >
+              <img
+                src="./assets/images/personal 1.png"
+                alt="Personal loans"
+                class="w-6 h-6 object-contain"
+              />
+            </div>
+            <div>
+              <h3 class="font-bold text-base sm:text-lg text-[#00B074] mb-1.5">
+                Personal loans
+              </h3>
+              <p class="text-gray-500 text-xs sm:text-sm leading-relaxed">
+                Reen Bank could offer personal loans for a variety of purposes,
+                such as debt consolidation, home improvements, or major
+                purchases. Customers could apply online and receive a decision
+                quickly, with flexible repayment terms and competitive interest
+                rates.
+              </p>
+            </div>
+          </div>
+          <!-- Service Item 3 -->
+          <div class="flex items-start gap-4">
+            <div
+              class="w-12 h-12 rounded-xl bg-[#FFF0F0] flex items-center justify-center shrink-0"
+            >
+              <img
+                src="./assets/images/credit-card 1.png"
+                alt="Credit cards"
+                class="w-6 h-6 object-contain"
+              />
+            </div>
+            <div>
+              <h3 class="font-bold text-base sm:text-lg text-[#00B074] mb-1.5">
+                Credit cards
+              </h3>
+              <p class="text-gray-500 text-xs sm:text-sm leading-relaxed">
+                Reen Bank could offer credit cards with different rewards
+                programs and benefits, such as cash back, travel rewards, or low
+                interest rates. Customers could manage their card online and
+                receive alerts for suspicious activity or due dates.
+              </p>
+            </div>
+          </div>
+          <!-- Service Item 4 -->
+          <div class="flex items-start gap-4">
+            <div
+              class="w-12 h-12 rounded-xl bg-[#FFF0F0] flex items-center justify-center shrink-0"
+            >
+              <img
+                src="./assets/images/money 1.png"
+                alt="Investment services"
+                class="w-6 h-6 object-contain"
+              />
+            </div>
+            <div>
+              <h3 class="font-bold text-base sm:text-lg text-[#00B074] mb-1.5">
+                Investment services
+              </h3>
+              <p class="text-gray-500 text-xs sm:text-sm leading-relaxed">
+                Reen Bank could offer investment services for customers looking
+                to grow their wealth over time. These services could include
+                mutual funds, exchange-traded funds, and other investment
+                vehicles, with access to professional financial advice and
+                analysis.
+              </p>
+            </div>
+          </div>
+          <!-- Service Item 5 -->
+          <div class="flex items-start gap-4">
+            <div
+              class="w-12 h-12 rounded-xl bg-[#FFF0F0] flex items-center justify-center shrink-0"
+            >
+              <img
+                src="./assets/images/bill 1.png"
+                alt="Online bill pay"
+                class="w-6 h-6 object-contain"
+              />
+            </div>
+            <div>
+              <h3 class="font-bold text-base sm:text-lg text-[#00B074] mb-1.5">
+                Online bill pay
+              </h3>
+              <p class="text-gray-500 text-xs sm:text-sm leading-relaxed">
+                Reen Bank could offer a convenient online bill pay service,
+                allowing customers to pay bills and manage expenses from their
+                computer or mobile device. This service could include features
+                like automatic payments, bill reminders, and customizable
+                payment schedules.
+              </p>
+            </div>
+          </div>
+          <!-- Service Item 6 -->
+          <div class="flex items-start gap-4">
+            <div
+              class="w-12 h-12 rounded-xl bg-[#FFF0F0] flex items-center justify-center shrink-0"
+            >
+              <img
+                src="./assets/images/deal 1.png"
+                alt="Business banking"
+                class="w-6 h-6 object-contain"
+              />
+            </div>
+            <div>
+              <h3 class="font-bold text-base sm:text-lg text-[#00B074] mb-1.5">
+                Business banking
+              </h3>
+              <p class="text-gray-500 text-xs sm:text-sm leading-relaxed">
+                Reen Bank could offer a range of banking services for small and
+                medium-sized businesses, including checking accounts, business
+                loans, merchant services, and cash management tools. These
+                services could help businesses streamline financial operations
+                and grow their business over time.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- FAQS SECTION -->
+    <section
+      id="faqs"
+      class="w-full bg-[#D8F2E7] py-12 sm:py-20 relative overflow-hidden"
+    >
+      <!-- Background Question Mark Graphic Overlay -->
+      <div
+        class="absolute right-0 bottom-0 pointer-events-none opacity-20 lg:opacity-40 select-none"
+      >
+        <span
+          class="text-[240px] sm:text-[380px] font-black text-[#00B074] leading-none"
+          >?</span
+        >
+      </div>
+      <div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <h2
+          class="text-2xl sm:text-4xl font-extrabold text-gray-900 mb-8 sm:mb-12 tracking-tight"
+        >
+          FAQs
+        </h2>
+        <div
+          class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start"
+        >
+          <!-- Active Highlighted FAQ (Left Column Dynamic) -->
+          <div id="faqActiveContent" class="min-h-[160px]">
+            <!-- Rendered dynamically by JavaScript -->
+          </div>
+          <!-- FAQ Accordion List (Right Column Dynamic) -->
+          <div id="faqList" class="space-y-4">
+            <!-- Rendered dynamically by JavaScript -->
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- SUPPORTED FINANCE SERVICES BANNER -->
+    <section class="w-full bg-white py-8 sm:py-12 border-b border-gray-100">
+      <div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <p class="text-xs sm:text-sm font-bold text-gray-800 mb-6 sm:mb-8">
+          Supported by various finance services
+        </p>
+        <div
+          class="flex flex-wrap items-center justify-center gap-8 sm:gap-14 lg:gap-20 opacity-90"
+        >
+          <img
+            src="./assets/images/Mastercard_2019_logo 2.png"
+            alt="Mastercard"
+            class="h-6 sm:h-8 object-contain"
+          />
+          <img
+            src="./assets/images/visa.png"
+            alt="Visa"
+            class="h-5 sm:h-7 object-contain"
+          />
+          <img
+            src="./assets/images/PayPal-Logo 1.png"
+            alt="PayPal"
+            class="h-5 sm:h-7 object-contain"
+          />
+          <img
+            src="./assets/images/Payoneer_logo 1.png"
+            alt="Payoneer"
+            class="h-5 sm:h-7 object-contain"
+          />
+        </div>
+      </div>
+    </section>
+    <!-- FOOTER SECTION -->
+    <footer id="contact" class="w-full bg-[#D8F2E7] pt-12 sm:pt-16 pb-8">
+      <div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 mb-12">
+          <!-- Left Footer Links -->
+          <div class="lg:col-span-5 grid grid-cols-2 gap-6">
+            <div>
+              <h4
+                class="text-xs font-extrabold text-gray-800 tracking-wider uppercase mb-4"
+              >
+                HELP
+              </h4>
+              <ul class="space-y-2.5 text-xs text-gray-600 font-medium">
+                <li><a href="#" class="hover:text-black">Help Center</a></li>
+                <li><a href="#" class="hover:text-black">Contact Us</a></li>
+                <li><a href="#" class="hover:text-black">How to Use</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4
+                class="text-xs font-extrabold text-gray-800 tracking-wider uppercase mb-4"
+              >
+                ABOUT
+              </h4>
+              <ul class="space-y-2.5 text-xs text-gray-600 font-medium">
+                <li>
+                  <a href="#" class="hover:text-black">About Reen Bank</a>
+                </li>
+                <li>
+                  <a href="#" class="hover:text-black">Terms & Conditions</a>
+                </li>
+                <li><a href="#" class="hover:text-black">Privacy Policy</a></li>
+              </ul>
+            </div>
+          </div>
+          <!-- Right Promotional Newsletter Banner Card -->
+          <div id="signup" class="lg:col-span-7">
+            <div
+              class="relative rounded-2xl overflow-hidden h-[240px] sm:h-[280px] p-6 sm:p-8 flex flex-col justify-end shadow-lg"
+            >
+              <!-- Background Image overlay -->
+              <img
+                src="./assets/images/Rectangle 159.png"
+                alt="City Buildings"
+                class="absolute inset-0 w-full h-full object-cover"
+              />
+              <div class="absolute inset-0 bg-black/50"></div>
+              <!-- Content on Top -->
+              <div class="relative z-10 max-w-[460px]">
+                <p class="text-xs font-medium text-gray-300 mb-1">
+                  New to Reen Bank?
+                </p>
+                <h3 class="text-xl sm:text-2xl font-bold text-white mb-4">
+                  Enter your Email <br />and Get Started Now
+                </h3>
+                <form
+                  onsubmit="handleNewsletterSubmit(event)"
+                  class="flex items-center gap-2 max-w-[400px]"
+                >
+                  <input
+                    type="email"
+                    required
+                    placeholder="Enter your Email"
+                    class="w-full h-10 px-4 bg-white/20 text-white placeholder-gray-300 rounded-lg text-xs outline-none border border-white/30 focus:border-white backdrop-blur-sm"
+                  />
+                  <button
+                    type="submit"
+                    class="h-10 px-5 bg-[#00B074] text-white rounded-lg text-xs font-semibold hover:bg-[#009160] transition-colors shrink-0 cursor-pointer"
+                  >
+                    Get Started
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Footer Bottom Branding & Socials -->
+        <div
+          class="pt-6 border-t border-gray-300/60 flex flex-col sm:flex-row items-center justify-between gap-4"
+        >
+          <div class="flex items-center gap-2">
+            <img
+              src="./assets/images/logo.png"
+              alt="Reen Bank"
+              class="h-6 object-contain"
+            />
+          </div>
+          <p class="text-[11px] text-gray-500 font-medium">
+            2026 ReenBank. All rights reserved
+          </p>
+          <div class="flex items-center gap-3 text-gray-700">
+            <a
+              href="#"
+              class="w-7 h-7 rounded-full bg-white/60 flex items-center justify-center hover:bg-[#00B074] hover:text-white transition-colors"
+            >
+              <span class="text-xs font-bold">f</span>
+            </a>
+            <a
+              href="#"
+              class="w-7 h-7 rounded-full bg-white/60 flex items-center justify-center hover:bg-[#00B074] hover:text-white transition-colors"
+            >
+              <span class="text-xs font-bold">in</span>
+            </a>
+            <a
+              href="#"
+              class="w-7 h-7 rounded-full bg-white/60 flex items-center justify-center hover:bg-[#00B074] hover:text-white transition-colors"
+            >
+              <span class="text-xs font-bold">t</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- LOGIN MODAL -->
+    <div
+      id="loginModal"
+      class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center hidden p-4"
+    >
+      <div
+        class="bg-white rounded-2xl p-6 sm:p-8 max-w-md w-full shadow-2xl relative"
+      >
+        <button
+          onclick="closeLoginModal()"
+          class="absolute top-4 right-4 text-gray-400 hover:text-black cursor-pointer"
+        >
+          <span class="material-symbols-outlined">close</span>
+        </button>
+        <div class="flex justify-center mb-4">
+          <img src="./assets/images/logo.png" alt="Reen Bank" class="h-8" />
+        </div>
+        <h2 class="text-xl font-bold text-center text-gray-900 mb-6">
+          Sign In to Online Banking
+        </h2>
+        <form onsubmit="handleLoginSubmit(event)" class="space-y-4">
+          <div>
+            <label class="block text-xs font-semibold text-gray-600 mb-1"
+              >Email or Account Number</label
+            >
+            <input
+              id="login-identifier"
+              type="text"
+              required
+              placeholder="Enter your email or account number"
+              class="w-full h-11 px-4 bg-gray-50 rounded-lg text-xs sm:text-sm outline-none border border-gray-200 focus:border-[#00B074]"
+            />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-gray-600 mb-1"
+              >Password</label
+            >
+            <input
+              id="login-password"
+              type="password"
+              required
+              placeholder="Enter password"
+              class="w-full h-11 px-4 bg-gray-50 rounded-lg text-xs sm:text-sm outline-none border border-gray-200 focus:border-[#00B074]"
+            />
+          </div>
+          <button
+            type="submit"
+            class="w-full h-11 bg-[#00B074] text-white rounded-lg font-semibold text-xs sm:text-sm hover:bg-[#009160] transition-colors cursor-pointer"
+          >
+            Login
+          </button>
+        </form>
+      </div>
+    </div>
+    <script src="./script.js"></script>
+  </body>
+</html>
